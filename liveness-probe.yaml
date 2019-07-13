@@ -1,0 +1,26 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: liveness-probe
+  labels:
+    app: liveness-probe
+spec:
+  containers:
+    - name: liveness-probe
+      image: nannany/liveness-probe-example:latest
+      readinessProbe:
+        httpGet:
+          path: /actuator/health
+          port: 8080
+        initialDelaySeconds: 10
+        timeoutSeconds: 2
+        periodSeconds: 3
+        failureThreshold: 1
+      livenessProbe:
+        httpGet:
+          path: /actuator/health
+          port: 8080
+        initialDelaySeconds: 20
+        timeoutSeconds: 2
+        periodSeconds: 8
+        failureThreshold: 1
